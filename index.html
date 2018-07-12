@@ -1,0 +1,70 @@
+<!doctype HTML>
+<html lang="en-us">
+
+<head>
+    <title>Script Test Page</title>
+    
+    <!-- CSS and STYLESHEETS -->
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    
+</head>
+<body>
+<!-- NOTES
+    This is a train schedule application that incorporates Firebase to host arrival and departure data. 
+    App will retrieve and manipulate this information with Moment.js. 
+    App will provide up-to-date information about various trains, 
+        including arrival times and minutes until arrival. 
+    When adding trains, administrators should be able to submit the following:    
+        * Train Name
+        * Destination 
+        * First Train Time -- in military time
+        * Frequency -- in minutes
+    * App will calculate when the next train will arrive relative to the current time.
+    
+    * Users from many different machines must be able to view same train times.
+-->
+
+<!-- Header & Main Display Section -->
+<div class = "header">
+
+</div>
+<div class = "table">
+    <table class="table table-hover" id='employee-table'>
+        <thead>
+            <tr>
+            <th>*****</th>
+            <th>Role</th>
+            <th>Start Date</th>
+            <th>Months Worked</th>
+            <th>Monthly Rate ($)</th>
+            <th>Total Billed ($)</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+</div>
+
+<!-- Form Input Section -->
+<div class = "form-input">
+    <form>
+        Train Name:<br> 
+        <input type="text" name="trainName-input"><br>
+        Destination:<br>
+        <input type="text" name="destination-input"><br>
+        First Train Time (HH:mm - military time)<br>
+        <input type="text" name="firstArrival-input"><br> <!-- How to validate proper time format for this? -->
+        Frequency (min)<br>
+        <input type="number" name="frequency-input"><br>
+        <input type="submit" value="Submit">    
+    </form>
+
+</div>
+
+</body>
+
+<script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type = "text/javascript" src="assets/javascript/app.js"></script>>
