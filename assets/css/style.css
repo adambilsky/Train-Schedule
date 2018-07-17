@@ -1,0 +1,9 @@
+.form-input {
+    margin-left: 10px;
+    border-top: 3px solid blue;
+}
+
+.form-box {
+    float:left;
+    margin-left: 20px;
+}
