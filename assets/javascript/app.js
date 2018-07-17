@@ -3,14 +3,7 @@
 // App will retrieve and manipulate this information with Moment.js. 
 // App will provide up-to-date information about various trains, 
 //     including arrival times and minutes until arrival. 
-// When adding trains, administrators should be able to submit the following:    
-//     * Train Name
-//     * Destination 
-//     * First Train Time -- in military time
-//     * Frequency -- in minutes
-// * App will calculate when the next train will arrive relative to the current time.
 
-// * Users from many different machines must be able to view same train times. //
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyD3oCh7JiGEIjF-3wo9Stau5IJepK8rJb4",
@@ -27,15 +20,24 @@ var database = firebase.database();
 // Initial Values
 var currentTime = moment();
 
+function clearInputs() {
+    $("#trainName").val("");
+    $("#trainDestination").val("");
+    $("#firstTrain").val("");
+    $("#trainFrequency").val("");
+}
+
 // Capture Button Click
 $("#train-submit").on("click", function (event) {
     event.preventDefault();
 
     // Grabbed values from text boxes
     var trainName = $("#trainName-input").val().trim();
-    var destination = $("#destination-input").val().trim();
-    var firstTime = moment($("#firstArrival-input").val().trim()).format("HH:mm");
+    var destination = $("#destination-input").val().trim();    
+    var firstTime = $("#firstArrival-input").val().trim();    
     var frequency = $("#frequency-input").val().trim();
+
+    console.log(moment('1:23 PM', 'hh:mm A').format('HH:mm'))
 
     // Code for handling the push
     database.ref().push({
@@ -47,9 +49,14 @@ $("#train-submit").on("click", function (event) {
     });
     console.log(trainName, destination, firstTime, frequency);
     console.log("first time: " + firstTime);
+    
+    // Clear the input boxes
+    clearInputs()
 });
+
+
 // 3. Create Firebase event for adding train to the database and a row in the html when a user adds an entry
-database.ref().on("child_added", function (childSnapshot, prevChildKey) {
+database.ref().on("child_added", function (childSnapshot) {
 
     console.log(childSnapshot.val());
 
@@ -59,16 +66,13 @@ database.ref().on("child_added", function (childSnapshot, prevChildKey) {
     var tableStart = childSnapshot.val().firstTime;
     var tableFreq = childSnapshot.val().frequency;
 
+    // Revert the start time by a year to ensure the next train time is in the future... 
     var tableStartConverted = moment(tableStart, "HH:mm").subtract(1, "years");
     var newFirst = moment(tableStart, "HH:mm");
-    var currentTime = moment();
-    console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
     var diffTime = moment().diff(moment(tableStartConverted), "minutes");
-    console.log("DIFFERENCE IN TIME: " + diffTime);
 
     // Time apart (remainder)
     var tRemainder = diffTime % tableFreq;
-    console.log(tRemainder);
 
     // Minute Until Train
     var tMinutesTillTrain = tableFreq - tRemainder;
